@@ -34,18 +34,40 @@ plot_fraud.py    -> fraud_meter_3.png  (the meter + weekly trajectories)
 pip install -r requirements.txt
 ```
 
-You need ESPN session cookies for your league. On fantasy.espn.com open
-DevTools > Application > Cookies and copy the values of `espn_s2` and `swid`
-into a file, one per line:
+### ESPN cookie file
 
-```
-<espn_s2 value>
-<swid value>
-```
+The pull script authenticates with your ESPN session using two cookies
+(`espn_s2` and `swid`). To get them:
 
-Default location is `~/.hermes/secrets/ff_cookies.txt` or the `$FF_COOKIES`
-environment variable. Cookies expire; re-copy them when the pull fails with
-`STALE_COOKIES`.
+1. Log in to [fantasy.espn.com](https://fantasy.espn.com) in your browser
+   (you must be logged into the account that belongs to your league).
+2. Open DevTools: press `F12` (or right-click the page and choose
+   **Inspect**).
+3. Go to the **Application** tab (Chrome/Edge) or **Storage** tab (Firefox)
+   → **Cookies** → `https://fantasy.espn.com`.
+4. Find the entries named `espn_s2` and `swid` and copy their **values**.
+5. Write them to a plain-text file, one per line, no quotes, no headers,
+   no extra whitespace:
+
+   ```
+   <value of espn_s2>
+   <value of swid>
+   ```
+
+6. Restrict the permissions, since these are session credentials:
+
+   ```bash
+   chmod 600 ff_cookies.txt
+   ```
+
+Point the script at the file in any of three ways (first match wins):
+
+- `--cookies /path/to/ff_cookies.txt` on the `pull_scores.py` command line
+- the `FF_COOKIES` environment variable
+- the default location `~/.hermes/secrets/ff_cookies.txt`
+
+Cookies expire (typically within a few weeks). When a pull fails with
+`STALE_COOKIES`, repeat the steps above and overwrite the file.
 
 ## Usage
 
