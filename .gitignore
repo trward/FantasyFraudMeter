@@ -1,0 +1,7 @@
+# data
+league_data.json
+fraud_data.json
+*.png
+report/
+__pycache__/
+.env
