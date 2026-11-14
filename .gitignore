@@ -1,7 +1,10 @@
 # data
 league_data.json
 fraud_data.json
+upgrades.json
 *.png
+!figs/
+!figs/*.png
 report/
 __pycache__/
 .env
